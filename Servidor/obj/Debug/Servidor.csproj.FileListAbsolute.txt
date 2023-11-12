@@ -6,3 +6,10 @@ C:\Users\Mónica\Desktop\Programación sobre redes\ProyectoRedes\ProyectoProgram
 C:\Users\Mónica\Desktop\Programación sobre redes\ProyectoRedes\ProyectoProgramacionSobreRedes\Servidor\obj\Debug\Servidor.csproj.CoreCompileInputs.cache
 C:\Users\Mónica\Desktop\Programación sobre redes\ProyectoRedes\ProyectoProgramacionSobreRedes\Servidor\obj\Debug\Servidor.exe
 C:\Users\Mónica\Desktop\Programación sobre redes\ProyectoRedes\ProyectoProgramacionSobreRedes\Servidor\obj\Debug\Servidor.pdb
+C:\Users\Federico Balbuena\Desktop\Proyectos\Desarrollo\ProgramacionSobreRedes\ProyectoRedes\Servidor\bin\Debug\Servidor.exe.config
+C:\Users\Federico Balbuena\Desktop\Proyectos\Desarrollo\ProgramacionSobreRedes\ProyectoRedes\Servidor\bin\Debug\Servidor.exe
+C:\Users\Federico Balbuena\Desktop\Proyectos\Desarrollo\ProgramacionSobreRedes\ProyectoRedes\Servidor\bin\Debug\Servidor.pdb
+C:\Users\Federico Balbuena\Desktop\Proyectos\Desarrollo\ProgramacionSobreRedes\ProyectoRedes\Servidor\obj\Debug\Servidor.csproj.AssemblyReference.cache
+C:\Users\Federico Balbuena\Desktop\Proyectos\Desarrollo\ProgramacionSobreRedes\ProyectoRedes\Servidor\obj\Debug\Servidor.csproj.CoreCompileInputs.cache
+C:\Users\Federico Balbuena\Desktop\Proyectos\Desarrollo\ProgramacionSobreRedes\ProyectoRedes\Servidor\obj\Debug\Servidor.exe
+C:\Users\Federico Balbuena\Desktop\Proyectos\Desarrollo\ProgramacionSobreRedes\ProyectoRedes\Servidor\obj\Debug\Servidor.pdb
