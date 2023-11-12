@@ -1,0 +1,8 @@
+C:\Users\Mónica\Desktop\Programación sobre redes\ProyectoRedes\ProyectoProgramacionSobreRedes\Cliente\bin\Debug\Cliente.exe.config
+C:\Users\Mónica\Desktop\Programación sobre redes\ProyectoRedes\ProyectoProgramacionSobreRedes\Cliente\bin\Debug\Cliente.exe
+C:\Users\Mónica\Desktop\Programación sobre redes\ProyectoRedes\ProyectoProgramacionSobreRedes\Cliente\bin\Debug\Cliente.pdb
+C:\Users\Mónica\Desktop\Programación sobre redes\ProyectoRedes\ProyectoProgramacionSobreRedes\Cliente\obj\Debug\Cliente.csproj.AssemblyReference.cache
+C:\Users\Mónica\Desktop\Programación sobre redes\ProyectoRedes\ProyectoProgramacionSobreRedes\Cliente\obj\Debug\Cliente.csproj.SuggestedBindingRedirects.cache
+C:\Users\Mónica\Desktop\Programación sobre redes\ProyectoRedes\ProyectoProgramacionSobreRedes\Cliente\obj\Debug\Cliente.csproj.CoreCompileInputs.cache
+C:\Users\Mónica\Desktop\Programación sobre redes\ProyectoRedes\ProyectoProgramacionSobreRedes\Cliente\obj\Debug\Cliente.exe
+C:\Users\Mónica\Desktop\Programación sobre redes\ProyectoRedes\ProyectoProgramacionSobreRedes\Cliente\obj\Debug\Cliente.pdb
