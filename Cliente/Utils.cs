@@ -1,16 +1,13 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
-using System.Threading;
 
 namespace Servidor
 {
     internal class Utils
     {
-        static string separator = "---------------------------------------------------------------------------------------";
         public static void printSeparator()
         {
-            Console.WriteLine(separator);
+            Console.WriteLine("---------------------------------------------------------------------------------------");
         }
 
         public static void printFileAndList(string fileName, string directory)
@@ -20,30 +17,30 @@ namespace Servidor
             printSeparator();
 
             string[] files = Directory.GetFiles(@directory);
-            //string[] log = new[] { "Files: " };
 
             foreach (string f in files)
             {
                 Console.WriteLine(f); // Mostramos los archivos en la consola
-                //log.Append(f);
             }
             printSeparator();
-            //Logger.writeLog(log);
         }
 
         public static void printClassError(string className, Exception error)
         {
-            string classError = className;
-            string errorMessage = "Error: " + error.Message.ToString();
             Console.WriteLine("");
             printSeparator();
-            Console.WriteLine(classError);
-            Console.WriteLine(errorMessage);
-            printSeparator();
+            Console.WriteLine("Class error: {0}", className);
             Console.WriteLine("");
-            string[] log = new[] {separator, classError, errorMessage, separator};
-            Logger.writeLog(log);
+            Console.WriteLine("Error: {0}", error.Message);
+            Console.WriteLine("");
             Console.ReadKey();
+        }
+
+        public static void printMessage(string message)
+        {
+            printSeparator();
+            Console.WriteLine(message);
+            printSeparator();
         }
     }
 

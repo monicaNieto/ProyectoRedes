@@ -20,7 +20,7 @@ namespace Servidor
         {
             try
             {
-
+                Console.WriteLine("Init Server ...");
                 createFolderInServer(ServerDirectory);
 
                 IPHostEntry host = Dns.GetHostEntry("localhost");

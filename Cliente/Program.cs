@@ -19,8 +19,6 @@ class Program
     static void Main()
     {
         iniciarSesion();
-
-
     }
 
     static void iniciarSesion()
@@ -50,13 +48,11 @@ class Program
         if (isLoginSuccessful)
         {
             conectarServer();
-            //subirArchivo();
         }
         else
         {
             Console.WriteLine("Inicio de sesión fallido.");
             iniciarSesion();
-
         }
     }
 
