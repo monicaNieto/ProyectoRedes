@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Sockets;
 using System.Net;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.IO;
 
 namespace Servidor
@@ -23,6 +20,9 @@ namespace Servidor
         {
             try
             {
+
+                createFolderInServer(ServerDirectory);
+
                 IPHostEntry host = Dns.GetHostEntry("localhost");
                 IPAddress addr = host.AddressList[0];
                 IPEndPoint endPoint = new IPEndPoint(addr, 8080);//4404);
@@ -39,9 +39,7 @@ namespace Servidor
             }
             catch (Exception e)
             {
-                Utils.printClassError("Server");
-                Console.WriteLine("{0}", e.Message);
-                Console.ReadKey();
+                Utils.printClassError("Server", e);
             }
         }
 
@@ -74,10 +72,16 @@ namespace Servidor
                 //received = this.Receive(client);
                 HandleClient(client);
             }
-
-
         }
 
+        private static void createFolderInServer(string serverDirectory)
+        {
+            // Crear el directorio de archivos si no existe
+            if (!Directory.Exists(serverDirectory))
+            {
+                Directory.CreateDirectory(serverDirectory);
+            }
+        }
         
 
         static void HandleClient(Socket client)
@@ -118,9 +122,7 @@ namespace Servidor
             }
             catch (Exception ex)
             {
-                Utils.printClassError("HandleClient");
-                Console.WriteLine($"Error al manejar cliente: {ex.Message}");
-                Console.ReadKey();
+                Utils.printClassError("HandleClient", ex);
             }
         }
 

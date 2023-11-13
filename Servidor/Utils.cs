@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Servidor
 {
@@ -11,7 +7,7 @@ namespace Servidor
     {
         public static void printSeparator()
         {
-            Console.WriteLine("----------------------------------------------------------------------");
+            Console.WriteLine("---------------------------------------------------------------------------------------");
         }
 
         public static void printFileAndList(string fileName, string directory)
@@ -29,11 +25,15 @@ namespace Servidor
             printSeparator();
         }
 
-        public static void printClassError(string className)
+        public static void printClassError(string className, Exception error)
         {
+            Console.WriteLine("");
             printSeparator();
             Console.WriteLine("Class error: {0}", className);
-            printSeparator();
+            Console.WriteLine("");
+            Console.WriteLine("Error: {0}", error.Message);
+            Console.WriteLine("");
+            Console.ReadKey();
         }
     }
 
