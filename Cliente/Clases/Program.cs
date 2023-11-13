@@ -63,6 +63,7 @@ class Program
             Console.WriteLine("Inicio de sesión exitoso.");
             
             conectarServer();
+
         }
         else
         {
@@ -106,8 +107,8 @@ class Program
         }
         catch (Exception)
         {
-            Console.WriteLine("Servidor apagado o fuera de servicio.");
-            Console.WriteLine("Verifique estado y presione una tecla para continuar");
+            Console.WriteLine("Servidor apagado o fuera de servicio!");
+            Console.WriteLine("Verifique estado y presione una tecla para continuar...");
             Console.ReadKey();
             conectarServer();
         }
