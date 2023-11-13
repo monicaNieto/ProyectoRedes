@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Servidor;
+using System;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -11,48 +12,61 @@ class Program
 
     static void Main()
     {
-        // Crear el directorio de archivos si no existe
-        if (!Directory.Exists(ServerDirectory))
-        {
-            Directory.CreateDirectory(ServerDirectory);
-        }
-
-        TcpListener server = null;
-
         try
         {
-            // Establecer la dirección IP y el puerto para el servidor
-            IPAddress ipAddress = IPAddress.Parse("127.0.0.1");
-            int port = 8080;
-
-            // Crear el objeto TcpListener
-            server = new TcpListener(ipAddress, port);
-
-            // Iniciar la escucha de conexiones
-            server.Start();
-
-            Console.WriteLine("Servidor esperando conexiones...");
-
-            while (true)
+            // Crear el directorio de archivos si no existe
+            if (!Directory.Exists(ServerDirectory))
             {
-                // Aceptar la conexión del cliente
-                TcpClient client = server.AcceptTcpClient();
-                Console.WriteLine("Cliente conectado.");
-
-                // Crear un hilo para manejar la conexión del cliente
-                Thread clientThread = new Thread(() => HandleClient(client));
-                clientThread.Start();
+                Directory.CreateDirectory(ServerDirectory);
             }
+
+            Server server = new Server();
+            Console.ReadKey();
         }
         catch (Exception e)
         {
-            Console.WriteLine($"Error: {e.Message}");
+            Utils.printClassError("Main");
+            Console.WriteLine(e);
+            Console.ReadKey();
         }
-        finally
-        {
-            // Detener el servidor (esto no se ejecutará en este ejemplo)
-            server?.Stop();
-        }
+        
+
+        //TcpListener server = null;
+
+        //try
+        //{
+        //    // Establecer la dirección IP y el puerto para el servidor
+        //    IPAddress ipAddress = IPAddress.Parse("127.0.0.1");
+        //    int port = 8080;
+
+        //    // Crear el objeto TcpListener
+        //    server = new TcpListener(ipAddress, port);
+
+        //    // Iniciar la escucha de conexiones
+        //    server.Start();
+
+        //    Console.WriteLine("Servidor esperando conexiones...");
+
+        //    while (true)
+        //    {
+        //        // Aceptar la conexión del cliente
+        //        TcpClient client = server.AcceptTcpClient();
+        //        Console.WriteLine("Cliente conectado.");
+
+        //        // Crear un hilo para manejar la conexión del cliente
+        //        Thread clientThread = new Thread(() => HandleClient(client));
+        //        clientThread.Start();
+        //    }
+        //}
+        //catch (Exception e)
+        //{
+        //    Console.WriteLine($"Error: {e.Message}");
+        //}
+        //finally
+        //{
+        //    // Detener el servidor (esto no se ejecutará en este ejemplo)
+        //    server?.Stop();
+        //}
     }
 
     static void HandleClient(TcpClient client)

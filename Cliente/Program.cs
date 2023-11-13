@@ -1,9 +1,11 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Net.Sockets;
 using System.Runtime.InteropServices.ComTypes;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 
 class Program
 {
@@ -12,7 +14,7 @@ class Program
     public static int serverPort = 8080;
 
     // Crear el objeto TcpClient y conectar al servidor
-    public static TcpClient client = null; //new TcpClient(serverIp, serverPort);
+   // public static TcpClient client = null; //new TcpClient(serverIp, serverPort);
 
     static void Main()
     {
@@ -48,7 +50,7 @@ class Program
         if (isLoginSuccessful)
         {
             conectarServer();
-            subirArchivo();
+            //subirArchivo();
         }
         else
         {
@@ -111,20 +113,45 @@ class Program
     }
 
 
+
     static void conectarServer()
     {
+         IPHostEntry host;
+         IPAddress addr;
+         IPEndPoint endPoint;
+         Socket socket;
         // Establecer la dirección IP y el puerto del servidor
         //string serverIp = "127.0.0.1";
         //int serverPort = 8080;
         // Crear el objeto TcpClient y conectar al servidor
-        client = new TcpClient(serverIp, serverPort);
+        //client = new TcpClient(serverIp, serverPort);
+
+        try
+        {
+            host = Dns.GetHostEntry("localhost");
+            addr = host.AddressList[0];
+            endPoint = new IPEndPoint(addr, 8080);
+            socket = new Socket(endPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+
+            //Se conecta al socket
+            socket.Connect(endPoint);
+
+            subirArchivo(socket);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.ToString());
+            Console.ReadKey();
+        }
+
+
         Console.WriteLine("Cliente conectado al servidor.");
     }
     
-    static void subirArchivo()
+    static void subirArchivo(Socket client)
     {
         // Obtener la secuencia de salida del cliente
-        NetworkStream stream = client.GetStream();
+        NetworkStream stream = new NetworkStream(client, true);//client.GetStream();
 
         // Solicitar al usuario el nombre del archivo a enviar
         Console.Write("Ingrese el nombre del archivo a enviar: ");
@@ -148,20 +175,21 @@ class Program
             }
             Console.WriteLine("EL archivo paso ok");
         }
-        client.Close();
+
+        stream.Close();
 
         Console.WriteLine("Quere volver a pasar un archivo? (y/n)");
         var ingreso = Console.ReadLine();
 
         if (ingreso == "yes" || ingreso == "YES" || ingreso == "y") {
             conectarServer();
-            subirArchivo();
+            //subirArchivo(clie);
         }
         else
         {
             Console.WriteLine("Se cierra la conexión con el servidor.");
             // Cerrar la conexión
-            client.Close();
+          //  client.Close();
         }
             
 
