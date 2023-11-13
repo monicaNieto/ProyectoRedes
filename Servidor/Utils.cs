@@ -10,7 +10,7 @@ namespace Servidor
         static string separator = "---------------------------------------------------------------------------------------";
         public static void printSeparator()
         {
-            Console.WriteLine(separator);
+            Console.WriteLine("---------------------------------------------------------------------------------------");
         }
 
         public static void printFileAndList(string fileName, string directory)
