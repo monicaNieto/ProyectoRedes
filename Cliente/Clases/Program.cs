@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Cliente.Clases;
+using System;
+using System.Data.SqlClient;
 using System.IO;
 using System.Net.Sockets;
 using System.Runtime.InteropServices.ComTypes;
@@ -14,8 +16,11 @@ class Program
     // Crear el objeto TcpClient y conectar al servidor
     public static TcpClient client = null; //new TcpClient(serverIp, serverPort);
 
+    static ConexionBD conexionBD = new ConexionBD(); //Crear conexionBD desde clase ConexionBD
+    
     static void Main()
     {
+        conexionBD.conectarDB();
         iniciarSesion();
 
 
@@ -25,70 +30,49 @@ class Program
     {
         string masterKey = "ClaveMaestraSecreta";
 
-        // Genera una contraseña y una sal (salt) aleatoria para el usuario
-        string password = "ContraseñaSecreta";
-        byte[] salt = GenerateSalt();
-        Console.WriteLine(Convert.ToBase64String(salt));
+        string consultaSalt1 = "select ISNULL(contraseniaSalt, 0) from Usuario where id=1";
 
 
-        // Hashea la contraseña usando la clave maestra y luego guarda el hash en la base de datos
-        string hashedPassword = HashPassword(password, salt, masterKey);
-        Console.WriteLine(hashedPassword);
+        SqlCommand comandoSalt = new SqlCommand(consultaSalt1, conexionBD.conectBD);
 
-        // Simula un intento de inicio de sesión
+        string salt = comandoSalt.ExecuteScalar().ToString();
 
-        Console.Write("Ingrese la contraseña: ");
+
+        string consultaHash1 = "select ISNULL(contraseniaHashed, 0) from Usuario where id=1";
+
+        SqlCommand comandoHash = new SqlCommand(consultaHash1, conexionBD.conectBD);
+
+        string hashedPassword = comandoHash.ExecuteScalar().ToString();
+
+        //Console.WriteLine("Salt en BD " + salt);
+        //Console.WriteLine("Hash en BD " + hashedPassword);
+
+        byte[] saltb = Convert.FromBase64String(salt); // R
+
+        Console.Write("Ingresa tu contraseña:");
+        
         string userInputPassword;
 
         userInputPassword = Console.ReadLine();
 
-        //string userInputPassword = "ContraseñaSecreta"; // Cambia esto a la contraseña correcta para probar
-        bool isLoginSuccessful = VerifyPassword(userInputPassword, salt, hashedPassword, masterKey);
+        bool isLoginSuccessful = VerifyPassword(userInputPassword, saltb, hashedPassword, masterKey);
 
         if (isLoginSuccessful)
         {
+            Console.WriteLine("Inicio de sesión exitoso.");
+            
             conectarServer();
             subirArchivo();
         }
         else
         {
             Console.WriteLine("Inicio de sesión fallido.");
+
             iniciarSesion();
-
         }
     }
 
-    static byte[] GenerateSalt()
-    {
-        byte[] salt = new byte[16];
-        using (var rng = RandomNumberGenerator.Create())
-        {
-            rng.GetBytes(salt);
-        }
-        return salt;
-    }
-
-    /* Derivación de Clave con PBKDF2:
-
-        La función Rfc2898DeriveBytes se utiliza para derivar una clave secreta a partir de la contraseña del usuario (password) y la sal (salt).
-        iterations indica la cantidad de veces que se aplicará el algoritmo PBKDF2 para hacer que el proceso de derivación sea más costoso y, por lo tanto, más seguro contra ataques de fuerza bruta. En este caso, se utiliza 10,000 iteraciones, pero este valor puede ajustarse según las necesidades de seguridad.
-
-    Hash de la Clave Derivada con HMAC-SHA256:
-
-        Se crea una instancia de HMACSHA256 utilizando la clave maestra (masterKey) como clave secreta. HMAC-SHA256
-    es un algoritmo de hash seguro.
-        La clave derivada obtenida en el paso anterior (hashBytes) se utiliza como entrada para este algoritmo de hash.
-
-    Conversión a Base64:
-
-        El resultado del cálculo del hash en el paso 2 es un conjunto de bytes. Para almacenarlo y compararlo de manera más
-    conveniente, se convierte en una cadena Base64 utilizando Convert.ToBase64String. Esta cadena Base64 es lo que se almacena 
-    en la base de datos para verificar contraseñas en futuros intentos de inicio de sesión.
-    
-    La combinación de PBKDF2 y HMAC-SHA256 junto con la clave maestra aumenta significativamente la seguridad de las contraseñas
-    almacenadas, ya que hace que sea extremadamente difícil para un atacante recuperar la contraseña original,
-    incluso si obtienen acceso a la base de datos y a la sal. Además, la clave maestra actúa como una capa adicional de seguridad.
-    */
+    //Hashea la contraseña ingresada
     static string HashPassword(string password, byte[] salt, string masterKey)
     {
         int iterations = 10000;
@@ -103,7 +87,7 @@ class Program
         }
     }
 
-    // Verifica la contraseña ingresada utilizando la clave maestra
+    // Verificar la contraseña ingresada utilizando la clave maestra
     static bool VerifyPassword(string userInputPassword, byte[] salt, string hashedPassword, string masterKey)
     {
         string hashedInputPassword = HashPassword(userInputPassword, salt, masterKey);
@@ -113,11 +97,8 @@ class Program
 
     static void conectarServer()
     {
-        // Establecer la dirección IP y el puerto del servidor
-        //string serverIp = "127.0.0.1";
-        //int serverPort = 8080;
-        // Crear el objeto TcpClient y conectar al servidor
         client = new TcpClient(serverIp, serverPort);
+
         Console.WriteLine("Cliente conectado al servidor.");
     }
     
@@ -165,16 +146,7 @@ class Program
         }
             
 
-        // Leer la respuesta del servidor
-        //byte[] responseBuffer = new byte[1024];
-        //int responseBytes = stream.Read(responseBuffer, 0, responseBuffer.Length);
-        //string responseMessage = Encoding.ASCII.GetString(responseBuffer, 0, responseBytes);
-        //Console.WriteLine($"Respuesta del servidor: {responseMessage}");
-
-
-
-
-
+        
         Console.ReadLine();
     }
 }
