@@ -1,5 +1,6 @@
 ﻿using Cliente.Clases;
 using System;
+using System.Collections.Concurrent;
 using System.Data.SqlClient;
 using System.IO;
 using System.Net.Sockets;
@@ -62,7 +63,6 @@ class Program
             Console.WriteLine("Inicio de sesión exitoso.");
             
             conectarServer();
-            subirArchivo();
         }
         else
         {
@@ -97,9 +97,21 @@ class Program
 
     static void conectarServer()
     {
-        client = new TcpClient(serverIp, serverPort);
+        try
+        {
+            client = new TcpClient(serverIp, serverPort);
 
-        Console.WriteLine("Cliente conectado al servidor.");
+            Console.WriteLine("Cliente conectado al servidor.");
+            subirArchivo();
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("Servidor apagado o fuera de servicio.");
+            Console.WriteLine("Verifique estado y presione una tecla para continuar");
+            Console.ReadKey();
+            conectarServer();
+        }
+        
     }
     
     static void subirArchivo()
