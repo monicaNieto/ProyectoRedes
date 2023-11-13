@@ -148,7 +148,22 @@ class Program
             }
             Console.WriteLine("EL archivo paso ok");
         }
-        Console.WriteLine("Quere volver a pasar un archivo?");
+        client.Close();
+
+        Console.WriteLine("Quere volver a pasar un archivo? (y/n)");
+        var ingreso = Console.ReadLine();
+
+        if (ingreso == "yes" || ingreso == "YES" || ingreso == "y") {
+            conectarServer();
+            subirArchivo();
+        }
+        else
+        {
+            Console.WriteLine("Se cierra la conexión con el servidor.");
+            // Cerrar la conexión
+            client.Close();
+        }
+            
 
         // Leer la respuesta del servidor
         //byte[] responseBuffer = new byte[1024];
@@ -158,8 +173,7 @@ class Program
 
 
 
-        // Cerrar la conexión
-        client.Close();
+
 
         Console.ReadLine();
     }
