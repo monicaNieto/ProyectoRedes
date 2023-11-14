@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Data.SqlClient;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
-using System.Runtime.InteropServices.ComTypes;
-using System.Security.Cryptography;
 using System.Text;
 using Servidor;
 
@@ -20,13 +17,16 @@ class Program
     static void Main()
     {
 
-        if (Servidor.ServicesDB.iniciarSesion())
+        while (true)
         {
-            conectarServer();
-        }else
-        {
-            Servidor.ServicesDB.iniciarSesion();
+            if (Servidor.ServicesDB.iniciarSesion())
+            {
+                conectarServer();
+                break;
+            }
         }
+
+
 
     }
 
@@ -54,9 +54,6 @@ class Program
             Console.WriteLine(e.ToString());
             Console.ReadKey();
         }
-
-
-        Console.WriteLine("Cliente conectado al servidor.");
     }
 
     static void subirArchivo(Socket client)
