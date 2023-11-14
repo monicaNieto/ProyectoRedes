@@ -20,15 +20,15 @@ namespace Servidor
             printSeparator();
 
             string[] files = Directory.GetFiles(@directory);
-            //string[] log = new[] { "Files: " };
+            string[] log = new[] { "Files: " };
 
             foreach (string f in files)
             {
                 Console.WriteLine(f); // Mostramos los archivos en la consola
-                //log.Append(f);
+                log.Append(f);
             }
             printSeparator();
-            //Logger.writeLog(log);
+            Logger.writeLog(log);
         }
 
         public static void printClassError(string className, Exception error)
@@ -43,7 +43,6 @@ namespace Servidor
             Console.WriteLine("");
             string[] log = new[] {separator, classError, errorMessage, separator};
             Logger.writeLog(log);
-            Console.ReadKey();
         }
     }
 
