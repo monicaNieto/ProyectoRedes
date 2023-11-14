@@ -59,14 +59,6 @@ namespace Servidor
             Socket client = (Socket)o;
             object received;
 
-            //do
-            //{
-            //    received = this.Receive(client);
-            //} while (!(received is User));
-
-            //this.usersTable.Add(received, client);
-            //this.SendAllUsers(client);
-
             while (true)
             {
                 //received = this.Receive(client);
@@ -82,10 +74,15 @@ namespace Servidor
                 Directory.CreateDirectory(serverDirectory);
             }
         }
-        
+
+        static SemaphoreSlim _sem = new SemaphoreSlim(2);
+
 
         static void HandleClient(Socket client)
         {
+            Console.WriteLine("entrando a handle {0}", client.GetHashCode());
+            _sem.Wait();
+            Console.WriteLine("estoy adentro! {0}", client.GetHashCode());
             try
             {
                 // Obtener la secuencia de entrada del cliente
@@ -109,7 +106,7 @@ namespace Servidor
                     }
                 }
 
-                Utils.printFileAndList(fileName, ServerDirectory);
+               // Utils.printFileAndList(fileName, ServerDirectory);
 
                 // Responder al cliente
                 string responseMessage = "Archivo recibido con éxito en el servidor.";
@@ -118,40 +115,17 @@ namespace Servidor
 
 
                 // Cerrar la conexión
-                client.Close();
+              //  client.Close();
+                Console.WriteLine("salgo handle {0}", client.GetHashCode());
+                _sem.Release();
             }
             catch (Exception ex)
             {
+                Console.WriteLine("Paso POR ACÄ");
+                _sem.Release();
                 Utils.printClassError("HandleClient", ex);
             }
         }
-
-
-        //Se envía a todos los usuarios conectados
-        private void SendAllUsers(Socket s)
-        {
-            foreach (DictionaryEntry d in this.usersTable)
-            {
-                this.Send(s, d.Key);
-            }
-        }
-
-
-        private void Send(Socket s, object o)
-        {
-            byte[] buffer = new byte[1024];
-            byte[] obj = BinarySerialization.Serializate(o);
-            Array.Copy(obj, buffer, obj.Length);
-            s.Send(buffer);
-        }
-
-        private object Receive(Socket s)
-        {
-            byte[] buffer = new byte[1024];
-            s.Receive(buffer);
-            return BinarySerialization.Deserializate(buffer);
-        }
-
 
     }
 }
