@@ -21,7 +21,7 @@ Visual Studio con .Net Framework 4.7.2
 
 SQL Server con localdb.
 
-1- Ejecutar los scripts que se encuentran en _DB_SCRIPT:
+1- Ejecutar los scripts que se encuentran en _SCRIPT_DB:
 
 Estos scrips crean la db local con la tabla y datos para realizar pruebas de validación
 
