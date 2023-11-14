@@ -8,7 +8,7 @@ namespace Servidor
     {
 
         private static ConnSingleton dbInstance;
-        private readonly SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-TCDL3NA\SQLEXPRESS;Initial Catalog=Personas; Integrated Security=true");
+        private readonly SqlConnection conn = new SqlConnection(@"Data Source=127.0.0.1;Initial Catalog=Personas; Integrated Security=true");
 
         private ConnSingleton()
         {
